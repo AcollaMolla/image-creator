@@ -1,15 +1,13 @@
 #include <stdio.h> 
 #include <stdlib.h>
-void createImage(){
-		//Settings for the image, ie height, width and iterators
-	int width = 10, input, i, j, pixel;
-	int height = 10;
+void createImage(int width, int height){
+	//Settings for the image, ie height, width and iterators
+	int i, j;
+	int pixels = width * height;
 	//The actual image data. Will create a horizontal striped monochromatic image
-	int image[10][10];
-	for(i=0;i<10;i++){
-		for(j=0;j<10;j++){
-			image [i][j] = rand() % 2;
-		}
+	int *image = malloc(pixels * sizeof(int));
+	for(i=0;i<pixels;i++){
+		image [i] = rand() % 2;
 	}
 	//Initialize file handler
 	FILE* image_file;
@@ -20,26 +18,26 @@ void createImage(){
 	fprintf(image_file, "P1\n");
 	//Write width and height for the image
 	fprintf(image_file, "%d %d\n", width, height);
-	for(i=0;i<height;i++){
-		for(j=0;j<width;j++){
-			//Determine the color value of a single pixel based on the 'image' 2D array above
-			pixel = image[i][j];
+	for(i=0;i<pixels;i++){
 			//Write single pixel to the image
-			fprintf(image_file, "%d", pixel);
-		}
+			fprintf(image_file, "%d", image[i]);
 	}
 	//Close file stream
 	fclose(image_file);
 }
 int main(){
-	int choice;
+	int choice, width, height;
 	do{
-		printf("1. Generate image");
+		printf("1. Generate image\n");
 		scanf("%d", &choice);
 		switch(choice){
 			case 1:
+				printf("Enter width for image: ");
+				scanf("%d", &width);
+				printf("Enter height for image: ");
+				scanf("%d", &height);
 				printf("Creating image\n");
-				createImage();
+				createImage(width, height);
 			break;
 			default:
 				printf("Illegal command");
