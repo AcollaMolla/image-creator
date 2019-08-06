@@ -1,10 +1,9 @@
 #include <stdio.h> 
 #include <stdlib.h>
 void createImage(int width, int height){
-	//Settings for the image, ie height, width and iterators
 	int i, j;
+	//Calculate the number of pixels needed
 	int pixels = width * height;
-	//The actual image data. Will create a horizontal striped monochromatic image
 	int *image = malloc(pixels * sizeof(int));
 	for(i=0;i<pixels;i++){
 		image [i] = rand() % 2;
